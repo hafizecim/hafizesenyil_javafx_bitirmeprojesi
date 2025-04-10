@@ -96,3 +96,13 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333;
 }
+/* Metin kutuları için padding ayarları */
+.text-field, .password-field {
+    -fx-padding: 10 10 10 40;  /* İkon için sol tarafta ekstra padding */
+}
+
+/* İkon boyutunu ayarlamak için */
+.image-view {
+    -fx-fit-width: 20px;
+    -fx-fit-height: 20px;
+}

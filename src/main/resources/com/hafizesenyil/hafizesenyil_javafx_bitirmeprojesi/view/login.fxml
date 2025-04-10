@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.LoginController"
@@ -19,6 +20,10 @@
                   -fx-font-weight: bold;
                   -fx-text-fill: #222;" />
 
+    <!-- Kullanıcı Adı Alanı ve İkon -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+    <!--<ImageView fx:id="userIcon" fitWidth="20" fitHeight="20"
+               image="@/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/images/user-icon.png" />-->
     <TextField fx:id="usernameField"
                promptText="Kullanıcı Adı / Email"
                style="-fx-font-size: 16px;
@@ -27,15 +32,22 @@
                       -fx-border-radius: 10;
                       -fx-border-width: 1.5;
                       -fx-padding: 10;" />
+</HBox>
 
-    <PasswordField fx:id="passwordField"
-                   promptText="Şifre"
-                   style="-fx-font-size: 16px;
-                          -fx-background-radius: 10;
-                          -fx-border-color: #2a9df4;
-                          -fx-border-radius: 10;
-                          -fx-border-width: 1.5;
-                          -fx-padding: 10;" />
+<!-- Şifre Alanı ve İkon -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <!--<ImageView fx:id="lockIcon" fitWidth="20" fitHeight="20"
+                   image="@/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/images/lock-icon.png"/>  -->
+        <PasswordField fx:id="passwordField"
+                       promptText="Şifre"
+                       style="-fx-font-size: 16px;
+                              -fx-background-radius: 10;
+                              -fx-border-color: #2a9df4;
+                              -fx-border-radius: 10;
+                              -fx-border-width: 1.5;
+                              -fx-padding: 10;" />
+
+    </HBox>
 
     <Button text="Giriş Yap"
             onAction="#login"

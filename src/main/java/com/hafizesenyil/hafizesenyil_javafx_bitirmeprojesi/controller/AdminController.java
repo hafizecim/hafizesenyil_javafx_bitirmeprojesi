@@ -4,8 +4,10 @@ import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dao.KdvDAO;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dao.UserDAO;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dto.KdvDTO;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dto.UserDTO;
+import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.enums.NotificationMessageType;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.ERole;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.FXMLPath;
+import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.NotificationManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -101,6 +103,7 @@ public class AdminController {
 
     @FXML
     public void initialize() {
+
         // Zaman
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
@@ -1019,9 +1022,38 @@ public class AdminController {
 
     // BİTİRME PROJESİ
     @FXML
+    private Button darkModeButton;
+
+    private boolean isDarkMode = false;
+
+    @FXML
     private void toggleTheme(ActionEvent event) {
-        // Tema değiştirme işlemleri burada yapılacak
+        Scene scene = darkModeButton.getScene();
+        if (scene == null) return;
+
+        String darkMode = getClass().getResource("/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/css/dark_mode.css").toExternalForm();
+        String lightMode = getClass().getResource("/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/css/admin.css").toExternalForm();
+
+        if (isDarkMode) {
+            // Karanlıktan aydınlığa geçiş
+            scene.getStylesheets().remove(darkMode);
+            scene.getStylesheets().add(lightMode);
+            isDarkMode = false;
+            NotificationManager.showNotification("🌕 Aydınlık Moda Hoşgeldiniz", NotificationMessageType.SUCCESS);
+            darkModeButton.setText("🌙 Karanlık Mod"); // Aydınlık moda geçtikten sonra buton karanlık mod yazsın
+            darkModeButton.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 8;");
+        } else {
+            // Aydınlıktan karanlığa geçiş
+            scene.getStylesheets().remove(lightMode);
+            scene.getStylesheets().add(darkMode);
+            isDarkMode = true;
+            NotificationManager.showNotification("🌙 Karanlık Moda Hoşgeldiniz", NotificationMessageType.SUCCESS);
+            darkModeButton.setText("🌕 Aydınlık Mod");// Karanlık moda geçtikten sonra buton aydınlık mod yazsın
+            darkModeButton.setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: black; -fx-background-radius: 8;");
+
+        }
     }
+
 
     @FXML
     private void languageTheme(ActionEvent event) {
