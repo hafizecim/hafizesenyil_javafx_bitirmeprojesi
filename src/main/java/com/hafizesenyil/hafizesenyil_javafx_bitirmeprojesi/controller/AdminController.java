@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -1200,9 +1201,44 @@ public class AdminController {
     }
 
 
+    /*
     @FXML
     private void showNotifications(ActionEvent event) {
         // Bildirimleri gösteren popup veya panel açılacak
+    }
+    */
+
+    // Bu metod butona tıklanınca çağrılacak
+    @FXML
+    private void showNotifications(ActionEvent event) {
+        // Örnek bildirim listesi (gerçek zamanlı veri yerine örnek olarak kullanıyoruz)
+        List<String> notifications = getNotifications();
+
+        // Bildirimleri göstermek için bir ListView oluştur
+        ListView<String> notificationList = new ListView<>();
+        notificationList.getItems().addAll(notifications);
+
+        // Bildirim paneli
+        VBox notificationPanel = new VBox();
+        notificationPanel.getChildren().add(notificationList);
+
+        // Popup veya dialog kutusu aç
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Bildirimler");
+        alert.setHeaderText("Son Bildirimler");
+        alert.getDialogPane().setContent(notificationPanel);  // Bildirimlerin ListView ile gösterilmesi
+        alert.showAndWait();
+    }
+
+    // Örnek bildirim verilerini döndüren metot
+    private List<String> getNotifications() {
+        // Gerçek uygulamada buraya veritabanı veya API'den veri çekilebilir
+        List<String> notifications = new ArrayList<>();
+        notifications.add("Yeni bir mesajınız var.");
+        notifications.add("Güncellemeler mevcut.");
+        notifications.add("Sistem bakımda olacak.");
+        notifications.add("Yeni bildirimler geldi!");
+        return notifications;
     }
 
     @FXML
