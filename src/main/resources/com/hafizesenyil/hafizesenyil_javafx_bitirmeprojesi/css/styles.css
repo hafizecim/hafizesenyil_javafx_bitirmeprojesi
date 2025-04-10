@@ -106,3 +106,16 @@
     -fx-fit-width: 20px;
     -fx-fit-height: 20px;
 }
+/* Alert stilini özelleştirme */
+.alert {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #e67e22;
+    -fx-border-radius: 10;
+}
+
+/* ListView stilini özelleştirme */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10;
+    -fx-border-color: #e67e22;
+}
