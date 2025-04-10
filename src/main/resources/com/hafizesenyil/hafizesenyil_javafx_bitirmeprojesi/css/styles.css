@@ -1,6 +1,4 @@
-
-
-
+/*
 .button {
     -fx-background-color: #2F2F2F; /* Arka plan rengi: Antrasit gri */
     -fx-text-fill: white; /* Yazı rengi: Beyaz */
@@ -33,4 +31,68 @@
     -fx-background-image: url('../images/deneme.png');
     -fx-background-size: cover; /* Resmi kaplayacak şekilde boyutlandırır */
     -fx-background-position: center; /* Resmi ortalar */
+}
+*/
+
+/* Tüm butonlar için genel stil */
+.button {
+    -fx-background-color: #2F2F2F; /* Antrasit gri */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0.2, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+/* Buton hover efekti */
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #81C784); /* Yeşil degrade */
+    -fx-text-fill: black;
+}
+
+/* Buton basıldığında */
+.button:pressed {
+    -fx-background-color: #2E7D32;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.1, 0, 1);
+    -fx-translate-y: 2px;
+}
+
+/* Arka plan görseli ve içerik düzeni için VBox */
+.vbox {
+    -fx-background-image: url('../images/deneme.png');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0.3, 0, 4);
+}
+
+/* Giriş kutuları (TextField ve PasswordField) için ortak stil */
+.text-field, .password-field {
+    -fx-font-size: 16px;
+    -fx-background-radius: 10;
+    -fx-border-color: #4CAF50;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.5px;
+    -fx-padding: 10;
+    -fx-background-color: #FFFFFFE6; /* Hafif saydam beyaz */
+}
+
+/* Odaklanıldığında giriş kutularının görünümü */
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #66BB6A;
+    -fx-border-width: 2;
+}
+
+/* Başlıklar için örnek stil */
+.label-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
 }
