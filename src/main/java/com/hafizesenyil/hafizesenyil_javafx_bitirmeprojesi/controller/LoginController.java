@@ -11,8 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -122,6 +121,92 @@ public class LoginController {
             e.printStackTrace();
             showAlert("Hata", "Kayıt ekranı yüklenemedi", Alert.AlertType.ERROR);
         }
+    }
+
+    public static class MainController {
+
+        // Header bölümündeki değişkenler
+        @FXML
+        private Label headerLabel;
+        @FXML
+        private Button darkModeButton;
+        @FXML
+        private Button notificationButton;
+        @FXML
+        private Button backupButton;
+        @FXML
+        private Button restoreButton;
+        @FXML
+        private Button notebookButton;
+        @FXML
+        private Button profileButton;
+        @FXML
+        private Button logoutButton;
+
+        // Menü bölümündeki değişkenler
+        @FXML
+        private Menu menuFile;
+        @FXML
+        private MenuItem menuItemExit;
+
+        @FXML
+        private Menu menuUser;
+        @FXML
+        private MenuItem menuItemAddUser;
+        @FXML
+        private MenuItem menuItemUpdateUser;
+        @FXML
+        private MenuItem menuItemDeleteUser;
+
+        @FXML
+        private Menu menuKdv;
+        @FXML
+        private MenuItem menuItemAddKdv;
+        @FXML
+        private MenuItem menuItemUpdateKdv;
+        @FXML
+        private MenuItem menuItemDeleteKdv;
+
+        @FXML
+        private Menu menuOther;
+        @FXML
+        private MenuItem menuItemCalculator;
+        @FXML
+        private MenuItem menuItemNotebook;
+
+        @FXML
+        private Menu menuHelp;
+        @FXML
+        private MenuItem menuItemAbout;
+
+        // Kullanıcı ve KDV ile ilgili butonlar
+        @FXML
+        private Label userTitleLabel;
+        @FXML
+        private Button btnAddUser;
+        @FXML
+        private Button btnUpdateUser;
+        @FXML
+        private Button btnDeleteUser;
+        @FXML
+        private Button btnPrintUser;
+
+        @FXML
+        private Button btnAddKdv;
+        @FXML
+        private Button btnUpdateKdv;
+        @FXML
+        private Button btnDeleteKdv;
+
+        // Footer ve dil butonu
+        @FXML
+        private Label kdvTitleLabel;
+        @FXML
+        private Label footerLabel;
+        @FXML
+        private Button languageButton;
+
+        // Diğer işlevsellikler burada yer alabilir
     }
 }
 
