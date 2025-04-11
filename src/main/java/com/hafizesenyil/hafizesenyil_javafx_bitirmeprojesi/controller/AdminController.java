@@ -1,5 +1,7 @@
 package com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller;
 
+import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.SpecialColor;
+
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dao.KdvDAO;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dao.UserDAO;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dto.KdvDTO;
@@ -42,9 +44,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,6 +52,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 
 public class AdminController {
 
@@ -65,6 +66,78 @@ public class AdminController {
         userDAO = new UserDAO();
         kdvDAO = new KdvDAO();
     }
+
+
+    // ********** 🔔 Bildirmler butonu loglar için ***********
+    // Kullanıcı işlem yaptığında log.txt dosyasına kaydetmesi için
+
+    // Oturumda aktif olan kullanıcıyı tutan sınıf
+    public class SessionUser {
+        private static String currentUsername;
+
+        // Singleton olarak kullanılabilir ya da statik olarak devam edilebilir
+        public static void setCurrentUsername(String username) {
+            currentUsername = username;
+        }
+
+        public static String getCurrentUsername() {
+            return currentUsername;
+        }
+    }
+
+
+
+    public class UserLogger {
+
+        private UserDAO userDao;
+
+        // UserDAO'nun bir kere oluşturulup kullanılmasını sağlıyoruz
+        public UserLogger(UserDAO userDao) {
+            this.userDao = userDao;
+        }
+
+        // Log dosyasına mesaj yazan metod
+        public void logYaz(String mesaj) {
+            String username = getUserUsername(); // Kullanıcı adını alıyoruz
+
+            try {
+                // Log klasörünü kontrol et, yoksa oluştur
+                Files.createDirectories(Paths.get("logs"));
+
+                // Tarih formatı ayarla
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                // Log dosyasına yaz
+                try (FileWriter writer = new FileWriter("logs/log.txt", true)) {
+                    writer.write(LocalDateTime.now().format(dateTimeFormatter) + " - Kullanıcı: " + username + " - " + mesaj + "\n");
+                }
+
+            } catch (IOException e) {
+                // Log dosyasına yazma hatasını daha iyi yönetebiliriz
+                System.err.println("Log dosyasına yazma hatası: " + e.getMessage());
+            }
+        }
+
+        // Kullanıcı adını almak için ayrı bir metod
+        private String getUserUsername() {
+            String username = SessionUser.getCurrentUsername(); // SessionUser'dan kullanıcı adını alıyoruz
+
+            if (username == null || username.isEmpty()) {
+                return "Unknown User"; // Eğer kullanıcı adı null ya da boşsa "Unknown User" döndürülür
+            }
+
+            // Veritabanından kullanıcı kontrolü yapalım
+            Optional<UserDTO> optionalUser = userDao.findByUsername(username);
+            if (optionalUser.isEmpty()) {
+                return "Unknown User"; // Veritabanında kullanıcı bulunamazsa "Unknown User" döndürülür
+            }
+
+            return optionalUser.get().getUsername(); // Veritabanındaki kullanıcı adı döndürülür
+        }
+    }
+
+
+
 
     // User İçin
     @FXML private TableView<UserDTO> userTable;
@@ -130,7 +203,6 @@ public class AdminController {
     private Label userTitleLabel;
     @FXML
     private Button btnAddUser,btnUpdateUser,btnDeleteUser,btnPrintUser;
-
 
     // Footer ve dil butonu
     @FXML
@@ -247,6 +319,7 @@ public class AdminController {
         } catch (IOException e) {
             showAlert("Hata", "KDV ekranı açılamadı!", Alert.AlertType.ERROR);
             e.printStackTrace();
+
         }
     }
 
@@ -259,6 +332,7 @@ public class AdminController {
         ObservableList<UserDTO> observableList = FXCollections.observableArrayList(userDTOList);
         userTable.setItems(observableList);
         showAlert("Bilgi", "Tablo başarıyla yenilendi!", Alert.AlertType.INFORMATION);
+
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {
@@ -293,6 +367,7 @@ public class AdminController {
         Printer printer = Printer.getDefaultPrinter();
         if (printer == null) {
             showAlert("Yazıcı Bulunamadı", "Yazıcı sistemde tanımlı değil.", Alert.AlertType.ERROR);
+
             return;
         }
 
@@ -302,8 +377,10 @@ public class AdminController {
             if (success) {
                 job.endJob();
                 showAlert("Yazdırma", "Tablo başarıyla yazdırıldı.", Alert.AlertType.INFORMATION);
+
             } else {
                 showAlert("Yazdırma Hatası", "Yazdırma işlemi başarısız oldu.", Alert.AlertType.ERROR);
+
             }
         }
     }
@@ -325,6 +402,7 @@ public class AdminController {
         } catch (IOException e) {
             showAlert("Hata", "Hesap makinesi açılamadı.", Alert.AlertType.ERROR);
             e.printStackTrace();
+
         }
     }
 
@@ -446,6 +524,7 @@ public class AdminController {
                 Transport.send(message);
 
                 showAlert("Başarılı", "Mail başarıyla gönderildi!", Alert.AlertType.INFORMATION);
+
             } catch (MessagingException e) {
                 e.printStackTrace();
                 showAlert("Hata", "Mail gönderilemedi.", Alert.AlertType.ERROR);
@@ -1085,6 +1164,16 @@ public class AdminController {
             NotificationManager.showNotification("🌕 Aydınlık Moda Hoşgeldiniz", NotificationMessageType.SUCCESS);
             darkModeButton.setText("🌙 Karanlık Mod"); // Aydınlık moda geçtikten sonra buton karanlık mod yazsın
             darkModeButton.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 8;");
+            // Kullanıcı adı sistemde zaten tutuluyor
+            // logYaz metodunu çağırırken, kullanıcı adı otomatik alınır
+            // UserDAO nesnesini oluşturuyoruz
+            UserDAO userDao = new UserDAO();
+
+// UserLogger'ı, UserDAO ile başlatıyoruz
+            UserLogger logger = new UserLogger(userDao);
+
+// Log yazma işlemi
+            logger.logYaz(SpecialColor.GREEN + "KDV ekranı açılamadı." + SpecialColor.RESET);
         } else {
             // Aydınlıktan karanlığa geçiş
             scene.getStylesheets().remove(lightMode);
@@ -1093,7 +1182,14 @@ public class AdminController {
             NotificationManager.showNotification("🌙 Karanlık Moda Hoşgeldiniz", NotificationMessageType.SUCCESS);
             darkModeButton.setText("🌕 Aydınlık Mod");// Karanlık moda geçtikten sonra buton aydınlık mod yazsın
             darkModeButton.setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: black; -fx-background-radius: 8;");
-
+            // Kullanıcı adı sistemde zaten tutuluyor
+            // logYaz metodunu çağırırken, kullanıcı adı otomatik alınır
+            // UserDAO nesnesini oluşturuyoruz
+            UserDAO userDao = new UserDAO();
+// UserLogger'ı, UserDAO ile başlatıyoruz
+            UserLogger logger = new UserLogger(userDao);
+// Log yazma işlemi
+            logger.logYaz(SpecialColor.GREEN + "KDV ekranı açılamadı." + SpecialColor.RESET);
         }
     }
 
@@ -1186,18 +1282,21 @@ public class AdminController {
         roleColumn.setText(bundle.getString("user.role"));
 
         footerLabel.setText(bundle.getString("footer"));
+
     }
 
     @FXML
     private void TurkishTheme() {
         currentLocale = new Locale("tr");
         languageTheme(currentLocale);
+
     }
 
     @FXML
     private void EnglishTheme() {
         currentLocale = new Locale("en");
         languageTheme(currentLocale);
+
     }
 
 
@@ -1208,27 +1307,37 @@ public class AdminController {
     }
     */
 
-    // Bu metod butona tıklanınca çağrılacak
     @FXML
     private void showNotifications(ActionEvent event) {
-        // Örnek bildirim listesi (gerçek zamanlı veri yerine örnek olarak kullanıyoruz)
-        List<String> notifications = getNotifications();
+        StringBuilder logs = new StringBuilder();
 
-        // Bildirimleri göstermek için bir ListView oluştur
-        ListView<String> notificationList = new ListView<>();
-        notificationList.getItems().addAll(notifications);
+        try (BufferedReader reader = new BufferedReader(new FileReader("log.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                logs.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            logs.append("Log dosyası okunamadı.");
+            e.printStackTrace();
+        }
 
-        // Bildirim paneli
-        VBox notificationPanel = new VBox();
-        notificationPanel.getChildren().add(notificationList);
-
-        // Popup veya dialog kutusu aç
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Bildirimler");
-        alert.setHeaderText("Son Bildirimler");
-        alert.getDialogPane().setContent(notificationPanel);  // Bildirimlerin ListView ile gösterilmesi
+        alert.setHeaderText("Son işlemler:");
+
+        TextArea textArea = new TextArea(logs.toString());
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setPrefSize(400, 300);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setExpandableContent(textArea);
+        dialogPane.setExpanded(true);
+
         alert.showAndWait();
     }
+
+
 
     // Örnek bildirim verilerini döndüren metot
     private List<String> getNotifications() {

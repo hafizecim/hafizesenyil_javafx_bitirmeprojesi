@@ -3,6 +3,8 @@ package com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dto;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.ERole;
 import lombok.*;
 
+import java.util.Optional;
+
 // Lombok
 @Getter
 @Setter

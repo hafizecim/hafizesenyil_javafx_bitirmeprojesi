@@ -22,6 +22,7 @@ public class UserDAO implements IDaoImplements<UserDTO>, ILogin<UserDTO> {
 
     private Connection connection;
 
+
     public UserDAO() {
         this.connection = SingletonPropertiesDBConnection.getInstance().getConnection();
     }
@@ -188,6 +189,30 @@ public class UserDAO implements IDaoImplements<UserDTO>, ILogin<UserDTO> {
             e.printStackTrace();
             return true; // hata varsa true dön ki işlem durdurulsun
         }
+    }
+
+
+
+    // Kullanıcıyı username ile bulma
+    public Optional<UserDTO> findByUsername(String username) {
+        String sql = "SELECT * FROM usertable WHERE username=?";
+        try (Connection conn = SingletonPropertiesDBConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                UserDTO user = new UserDTO();
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                // Diğer alanları burada set edebilirsiniz
+                return Optional.of(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
 

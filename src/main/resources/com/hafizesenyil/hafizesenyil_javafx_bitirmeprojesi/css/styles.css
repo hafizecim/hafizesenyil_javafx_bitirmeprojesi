@@ -50,6 +50,7 @@
     -fx-transition: all 0.3s ease;
 }
 
+
 /* Buton hover efekti */
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #4CAF50, #81C784); /* Yeşil degrade */
