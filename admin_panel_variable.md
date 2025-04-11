@@ -5,7 +5,6 @@
 - **📂 Menüler (Menus):** Uygulamanın üst kısmında bulunan ve farklı işlem gruplarına erişimi sağlayan açılır yapıdaki menülerdir. Her menü altında birden fazla menü öğesi (MenuItem) yer alır.
 
 ### **2.  🌍 Uygulama Arayüzü Çok Dilli Etiketler Tablosu**
-Java'daki **ilkel veri tipleri (Primitive Types)** hafızada doğrudan değer saklayan basit veri türleridir.
 
 | Bölüm                | Anahtar (Key)    | Türkçe Metin     | English Text      |
 |----------------------|------------------|------------------|-------------------|
