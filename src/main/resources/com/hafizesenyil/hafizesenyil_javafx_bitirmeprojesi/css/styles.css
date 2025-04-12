@@ -54,7 +54,7 @@
 /* Buton hover efekti */
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #4CAF50, #81C784); /* Yeşil degrade */
-    -fx-text-fill: black;
+    /*  -fx-text-fill: black; /* Yazı rengi: Siyah */
 }
 
 /* Buton basıldığında */

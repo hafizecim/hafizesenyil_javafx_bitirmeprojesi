@@ -8,7 +8,7 @@
         <VBox>
             <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
                 <Label fx:id="headerLabel" text="🔧 Yönetim Paneli" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" />
-                <Button fx:id="darkModeButton" text="🌙 Karanlık Mod" onAction="#toggleTheme" style="-fx-background-color: ##333333; -fx-text-fill: white; -fx-background-radius: 8;" />
+                <Button fx:id="darkModeButton" text="🌙 Karanlık Mod" onAction="#toggleTheme" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 8;" />
                 <MenuButton fx:id="languageMenuButton" text="🌐 Dil" style="-fx-background-color: #08c9c9; -fx-text-fill: white; -fx-background-radius: 8;">
                     <items>
                         <MenuItem text="Türkçe"  onAction="#TurkishTheme"/>

@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.NotificationHistoryController"
-            prefWidth="600.0" prefHeight="400.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.NotificationController"
+            prefWidth="600" prefHeight="400">
+    <VBox layoutX="10" layoutY="10" spacing="10"
+          AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
+          AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
+          style="-fx-background-color: white;">
 
-    <top>
-        <Label text="📋 Bildirim Geçmişi"
-               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 10;" />
-    </top>
+        <Label text="Kullanıcı Bildirimleri"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-    <center>
-        <TextArea fx:id="notificationDetailsTextArea"
-                  editable="false"
-                  wrapText="true"
-                  style="-fx-control-inner-background: #f9f9f9; -fx-font-size: 14px;" />
-    </center>
-
-    <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="10">
-            <children>
-                <Button text="Kapat"
-                        onAction="#closeWindow"
-                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;" />
-            </children>
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-        </HBox>
-    </bottom>
-
-</BorderPane>
+        <ListView fx:id="logListView"
+                  style="-fx-background-color: white; -fx-control-inner-background: white;"/>
+    </VBox>
+</AnchorPane>

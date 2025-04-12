@@ -1,5 +1,6 @@
 package com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller;
 
+import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.log.ActionLogger;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.SpecialColor;
 
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dao.KdvDAO;
@@ -67,7 +68,7 @@ public class AdminController {
         kdvDAO = new KdvDAO();
     }
 
-
+/*
     // ********** 🔔 Bildirmler butonu loglar için ***********
     // Kullanıcı işlem yaptığında log.txt dosyasına kaydetmesi için
 
@@ -83,11 +84,11 @@ public class AdminController {
         public static String getCurrentUsername() {
             return currentUsername;
         }
+
     }
 
-
-
     public class UserLogger {
+
 
         private UserDAO userDao;
 
@@ -98,6 +99,7 @@ public class AdminController {
 
         // Log dosyasına mesaj yazan metod
         public void logYaz(String mesaj) {
+
             String username = getUserUsername(); // Kullanıcı adını alıyoruz
 
             try {
@@ -106,6 +108,9 @@ public class AdminController {
 
                 // Tarih formatı ayarla
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                // Renk kodlarını temizle
+                //String temizMesaj = mesaj.replaceAll("\u001B\\[[;\\d]*m", "");
 
                 // Log dosyasına yaz
                 try (FileWriter writer = new FileWriter("logs/log.txt", true)) {
@@ -136,7 +141,7 @@ public class AdminController {
         }
     }
 
-
+*/
 
 
     // User İçin
@@ -332,7 +337,7 @@ public class AdminController {
         ObservableList<UserDTO> observableList = FXCollections.observableArrayList(userDTOList);
         userTable.setItems(observableList);
         showAlert("Bilgi", "Tablo başarıyla yenilendi!", Alert.AlertType.INFORMATION);
-
+        ActionLogger.log("Kullanıcı", " 🔁 Kullanıcısı tabloyu güncelledi ", ActionLogger.LogType.SUCCESS);
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {
@@ -1168,12 +1173,7 @@ public class AdminController {
             // logYaz metodunu çağırırken, kullanıcı adı otomatik alınır
             // UserDAO nesnesini oluşturuyoruz
             UserDAO userDao = new UserDAO();
-
-// UserLogger'ı, UserDAO ile başlatıyoruz
-            UserLogger logger = new UserLogger(userDao);
-
-// Log yazma işlemi
-            logger.logYaz(SpecialColor.GREEN + "KDV ekranı açılamadı." + SpecialColor.RESET);
+            ActionLogger.log("Kullanıcı",  "🌕 Kullanıcısı aydınlık moda geçti.", ActionLogger.LogType.SUCCESS);
         } else {
             // Aydınlıktan karanlığa geçiş
             scene.getStylesheets().remove(lightMode);
@@ -1186,10 +1186,7 @@ public class AdminController {
             // logYaz metodunu çağırırken, kullanıcı adı otomatik alınır
             // UserDAO nesnesini oluşturuyoruz
             UserDAO userDao = new UserDAO();
-// UserLogger'ı, UserDAO ile başlatıyoruz
-            UserLogger logger = new UserLogger(userDao);
-// Log yazma işlemi
-            logger.logYaz(SpecialColor.GREEN + "KDV ekranı açılamadı." + SpecialColor.RESET);
+            ActionLogger.log("Kullanıcı",  "🌙 Kullanıcısı karanlık moda geçti.", ActionLogger.LogType.SUCCESS);
         }
     }
 
@@ -1289,13 +1286,14 @@ public class AdminController {
     private void TurkishTheme() {
         currentLocale = new Locale("tr");
         languageTheme(currentLocale);
-
+        ActionLogger.log("Kullanıcı", " 🌍 Kullanıcısı sayfa dilini Türkçe yaptı ", ActionLogger.LogType.SUCCESS);
     }
 
     @FXML
     private void EnglishTheme() {
         currentLocale = new Locale("en");
         languageTheme(currentLocale);
+        ActionLogger.log("Kullanıcı", " 🌍 Kullanıcısı sayfa dilini İngilizce yaptı ", ActionLogger.LogType.SUCCESS);
 
     }
 
@@ -1307,6 +1305,7 @@ public class AdminController {
     }
     */
 
+    /*
     @FXML
     private void showNotifications(ActionEvent event) {
         StringBuilder logs = new StringBuilder();
@@ -1336,7 +1335,23 @@ public class AdminController {
 
         alert.showAndWait();
     }
+    */
 
+    @FXML
+    private void showNotifications(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/view/notification.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Kullanıcı Bildirimleri");
+            stage.setScene(new Scene(root));
+            stage.show();
+            ActionLogger.log("Kullanıcı",  "🔔  Kullanıcı bildirimler ekranını açtı.", ActionLogger.LogType.SUCCESS);
+        } catch (IOException e) {
+            e.printStackTrace();
+            ActionLogger.log("Kullanıcı", " ❌ Kullanıcı bildirimler ekranını açamadı.", ActionLogger.LogType.ERROR);
+        }
+    }
 
 
     // Örnek bildirim verilerini döndüren metot
@@ -1353,22 +1368,26 @@ public class AdminController {
     @FXML
     private void showProfile(ActionEvent event) {
         // Kullanıcı profil bilgileri gösterilecek pencere
+        ActionLogger.log("Kullanıcı", " 👨‍💼 Kullanıcısı profilini görüntüledi ", ActionLogger.LogType.SUCCESS);
     }
 
     @FXML
     private void backupData(ActionEvent event) {
         // Veritabanı yedekleme işlemleri burada yapılacak
+        ActionLogger.log("Kullanıcı", " 💾 Kullanıcısı yedekleme işlemini gerçekleştirdi ", ActionLogger.LogType.SUCCESS);
     }
 
     @FXML
     private void restoreData(ActionEvent event) {
         // Daha önce alınmış bir yedek dosyadan veri geri yüklenecek
+        ActionLogger.log("Kullanıcı", " 🔁 Kullanıcısı yedek dosyadan veri geri yükledi ", ActionLogger.LogType.SUCCESS);
     }
 
 
     @FXML
     private void notebook(ActionEvent event) {
-        // Daha önce alınmış bir yedek dosyadan veri geri yüklenecek
+        // Daha önce alınmış bir yedek dosyadan veri geri
+        ActionLogger.log("Kullanıcı", " 🔁 Kullanıcısı notbook sayfasını açtı ", ActionLogger.LogType.SUCCESS);
     }
 
 }
