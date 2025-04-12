@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Gerekli JavaFX bileşenleri import edilir -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!-- Ana kapsayıcı: Bildirim ekranı -->
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.NotificationController"
             prefWidth="600" prefHeight="400">
+
+    <!-- Dikey düzenleyici (üstten alta): başlık, filtre alanı, log listesi -->
     <VBox layoutX="10" layoutY="10" spacing="10"
           AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
           AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
           style="-fx-background-color: white;">
 
-        <Label text="Kullanıcı Bildirimleri"
+        <!-- Sayfa başlığı -->
+        <Label text="🔔 Kullanıcı Bildirimleri"
                style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
+        <!-- Filtre ve işlem butonları için yatay kutu -->
+        <HBox spacing="10">
+
+
+            <!-- Kullanıcı adına göre arama alanı -->
+            <TextField fx:id="searchField" promptText="Kullanıcı adı ile ara..." />
+
+            <!-- Arama filtresi butonu -->
+            <Button text="🔍 Ara" onAction="#FieldLogs" style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;"/>
+
+            <!-- Log temizleme butonu -->
+            <Button text="🧹 Temizle" onAction="#clearLogs" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;"/>
+
+            <!-- Log dışa aktarma butonu -->
+            <Button text="📤 Dışa Aktar" onAction="#exportLogs"  style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 8;" />
+
+            <!-- Filtreleme seçenekleri -->
+            <MenuButton fx:id="filterMenu" text="🔍 Filtrele" style="-fx-background-color: #08c9c9; -fx-text-fill: white; -fx-background-radius: 8;">
+                <items>
+                    <MenuItem text="🪄 Sadece Hatalar"  onAction="#onlyErrorsCheck" style=" -fx-background-radius: 8;"/>
+                    <MenuItem text="⏰ Tarihe Göre Sırala"  onAction="#sortByDateCheck" style=" -fx-background-radius: 8;"/>
+                </items>
+            </MenuButton>
+
+
+
+        </HBox>
+
+        <!-- Bildirimlerin listelendiği alan -->
         <ListView fx:id="logListView"
                   style="-fx-background-color: white; -fx-control-inner-background: white;"/>
+
     </VBox>
 </AnchorPane>

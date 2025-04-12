@@ -16,7 +16,7 @@
                     </items>
                 </MenuButton>
                 <Button fx:id="notificationButton" text="🔔 Bildirimler" onAction="#showNotifications" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 8;" />
-                <Button fx:id="backupButton" text="💾 Yedekle" onAction="#backupData"  style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;" />
+                    <Button fx:id="backupButton" text="💾 Yedekle" onAction="#backupData"  style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;" />
                 <Button fx:id="restoreButton" text="🔁 Geri Yükle" onAction="#refreshTable" style="-fx-background-color: #fdcb6e; -fx-text-fill: #2d3436; -fx-background-radius: 8;" />
                 <Button fx:id="restoreDataButton" text="🔁 Yedekten Geri Yükle" onAction="#restoreData"  style="-fx-background-color: #fab1a0; -fx-text-fill: #2d3436; -fx-background-radius: 8;" />
 
