@@ -1383,11 +1383,37 @@ public class AdminController {
         ActionLogger.log("Kullanıcı", " 🔁 Kullanıcısı yedek dosyadan veri geri yükledi ", ActionLogger.LogType.SUCCESS);
     }
 
-
+    /* ********** NOTEBOOK BUTONU ***********  */
+    /*
+    ✅ Açıklamalar:
+      1- FXMLLoader → arayüz ekranını yükler.
+      2- Stage → kullanıcıya gösterilen pencere.
+      3- ActionLogger → özel bir log sistemi. Hata ve başarı loglarını kaydeder.
+      4- try-catch → UI yüklemesinde hata olursa uygulama çökmesin diye güvenlik sağlar.
+     */
     @FXML
     private void notebook(ActionEvent event) {
-        // Daha önce alınmış bir yedek dosyadan veri geri
-        ActionLogger.log("Kullanıcı", " 🔁 Kullanıcısı notbook sayfasını açtı ", ActionLogger.LogType.SUCCESS);
+        try {
+            // 1️⃣ FXML dosyasını yükle (Not Defteri arayüzü)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/view/notebook.fxml"));
+            Parent root = loader.load();
+
+            // 2️⃣ Şu anki sahneyi al ve notebook ekranıyla değiştir
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("📝 Not Defteri");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // 3️⃣ Başarılı işlem logu (kullanıcı loglama sistemi varsa aktif olur)
+            ActionLogger.log("Kullanıcı", "📝 Kullanıcı not defteri sayfasını açtı", ActionLogger.LogType.SUCCESS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // 🚨 Hata oluştuysa log kaydı
+            ActionLogger.log("Kullanıcı", "❌ Not defteri sayfası açılamadı", ActionLogger.LogType.ERROR);
+        }
     }
+
 
 }

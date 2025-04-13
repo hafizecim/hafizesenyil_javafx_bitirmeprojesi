@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    note-ekle-form.fxml
+
+    Bu dosya, yeni bir not eklemek veya mevcut bir notu düzenlemek için kullanılan formun görünümünü tanımlar.
+    Bu form bir DialogPane içinde çalışır ve NoteEkleFormController ile bağlantılıdır.
+
+    Kullanıcı buradan:
+    - Başlık ve açıklama girebilir
+    - Kategori seçebilir
+    - Sabitleme işareti verebilir
+    - Notu kaydedebilir veya iptal edebilir
+-->
+
+<DialogPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.NoteEkleFormController">
+
+    <content>
+        <!-- Tüm içerikleri dikey şekilde yerleştiren ana konteyner -->
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <!-- Başlık -->
+            <Label text="📝 Başlık:"/>
+            <TextField fx:id="titleField" promptText="Not başlığı yazın"/>
+
+            <!-- Tarih (salt okunur)(otomatik gösterim, seçilemez) -->
+            <Label text="📅 Tarih:"/>
+            <Label fx:id="dateLabel" style="-fx-text-fill: #555;" />
+
+            <!-- Açıklama -->
+            <Label text="📋 Açıklama:"/>
+            <TextArea fx:id="contentArea" promptText="Not içeriğini girin..." prefRowCount="5"/>
+
+            <!-- Kategori seçimi -->
+            <Label text="🗂️ Kategori:"/>
+            <ComboBox fx:id="categoryBox" promptText="Kategori seçin" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 8;"/>
+
+            <!-- Sabitlenmiş mi? -->
+            <CheckBox fx:id="pinnedCheck" text="📌 Sabitlenmiş Not" />
+
+            <!-- Kaydet ve iptal butonları  -->
+            <HBox spacing="10">
+                <Button text="💾 Kaydet" onAction="#saveNote" style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                <Button text="❌ İptal" onAction="#cancel" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            </HBox>
+
+        </VBox>
+    </content>
+</DialogPane>

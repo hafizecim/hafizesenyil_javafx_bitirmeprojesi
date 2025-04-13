@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    notebook.fxml
+
+    Bu dosya, not defteri arayüzünü tanımlar. Kullanıcı bu ekran üzerinden:
+    - Yeni not ekleyebilir
+    - Notları filtreleyebilir
+    - Liste görünümünde notları görebilir
+    - Notları düzenleyebilir veya silebilir
+
+    Bağlı Controller: NotebookController.java
+-->
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.NotebookController"
+            prefWidth="700" prefHeight="500">
+
+    <!-- Dikey düzende tüm öğeleri yerleştiren kapsayıcı -->
+    <VBox spacing="10">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <!-- Başlık etiketi -->
+        <Label text="📘 Not Defteri" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <!-- 🔍 Arama ve filtreleme alanı -->
+        <HBox spacing="10">
+            <TextField fx:id="searchField" promptText="Başlıkta ara..." /> <!-- Başlıkta arama -->
+            <ComboBox fx:id="categoryFilter" promptText="Kategori Seç"  style="-fx-background-color: #3d8e00; -fx-text-fill: white; -fx-background-radius: 8;"/>  <!-- Kategori filtresi -->
+            <Button text="🔍 Filtrele" onAction="#filterNotes" style="-fx-background-color: #08c9c9; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            <Button text="➕ Yeni Not" onAction="#addNote" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            <CheckBox fx:id="pinnedFilter" text="📌 Sabitler" /> <!-- Sabitlenmişleri göster -->
+        </HBox>
+
+        <!-- 📋 Notların gösterildiği liste -->
+        <ListView fx:id="noteListView" prefHeight="300"/>
+
+        <!-- İşlem butonları -->
+        <HBox spacing="10">
+            <Button text="📝 Düzenle" onAction="#editNote" style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            <Button text="🗑️ Sil" onAction="#deleteNote" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>
