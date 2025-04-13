@@ -28,6 +28,7 @@ public class UserDTO {
     private LocalDateTime lastLogin;   // Son giriş tarihi
 
     // Parametresiz Constructor
+
     // Parametreli Constructor
 
     public UserDTO(Integer id, String username, String password, String email, ERole role,

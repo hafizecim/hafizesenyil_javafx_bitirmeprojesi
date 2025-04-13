@@ -10,6 +10,7 @@ import java.util.Properties;
 public class SingletonPropertiesDBConnection {
 
     // Veritabanı bilgileri
+
     private static String URL;
     private static String USERNAME;
     private static String PASSWORD;
