@@ -50,10 +50,15 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class AdminController {
@@ -1403,8 +1408,35 @@ public class AdminController {
     @FXML
     private void backupData(ActionEvent event) {
         // Veritabanı yedekleme işlemleri burada yapılacak
-        ActionLogger.log("Kullanıcı", " 💾 Kullanıcısı yedekleme işlemini gerçekleştirdi ", ActionLogger.LogType.SUCCESS);
+
+        try {
+            // Klasörü oluştur
+            File backupFolder = new File("yedekler");
+            if (!backupFolder.exists()) {
+                backupFolder.mkdirs();
+            }
+
+            String backupPath = "yedekler/backup.zip";
+            String dbUrl = "jdbc:h2:./h2db/user_management";
+
+            // Veritabanı bağlantısı ve BACKUP işlemi
+            Connection conn = DriverManager.getConnection(dbUrl, "sa", "");
+            Statement stmt = conn.createStatement();
+            stmt.execute("BACKUP TO '" + backupPath + "'");
+
+            stmt.close();
+            conn.close();
+
+            NotificationManager.showNotification("✅ Veritabanı yedeği alındı.", NotificationMessageType.SUCCESS);
+            ActionLogger.log("Kullanıcı", "💾 Veritabanı yedeği alındı.", ActionLogger.LogType.SUCCESS);
+
+        } catch (Exception e) {
+            NotificationManager.showNotification("❌ Yedekleme hatası: " + e.getMessage(), NotificationMessageType.ERROR);
+            ActionLogger.log("Kullanıcı", "❌ Yedekleme hatası: " + e.getMessage(), ActionLogger.LogType.ERROR);
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void restoreData(ActionEvent event) {
