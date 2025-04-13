@@ -23,7 +23,7 @@
                 <Region HBox.hgrow="ALWAYS" />  <!--<Pane HBox.hgrow="ALWAYS" /> -->
                 <Button fx:id="notebookButton" text="📝 Not Defteri" onAction="#notebook" style="-fx-background-color: #00cec9; -fx-text-fill: white; -fx-background-radius: 8;" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="profileButton" text="👤 Profil" onAction="#showProfile" style="-fx-background-color: #6c5ce7; -fx-text-fill: white; -fx-background-radius: 8;" />
+                    <Button fx:id="profileButton" text="👤 Profil" onAction="#showProfile" style="-fx-background-color: #6c5ce7; -fx-text-fill: white; -fx-background-radius: 8;" />
 
                 <Button fx:id="logoutButton" text="🚦 Çıkış" onAction="#logout" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;" />
 

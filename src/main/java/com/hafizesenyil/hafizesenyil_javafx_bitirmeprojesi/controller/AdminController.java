@@ -30,6 +30,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -1365,11 +1366,39 @@ public class AdminController {
         return notifications;
     }
 
+
+    ///////////////////////////////////////////////////
+     // Profil ekranını açar.
+     // profile.fxml dosyasını yükleyip yeni bir pencere olarak kullanıcıya gösterir.
+
     @FXML
     private void showProfile(ActionEvent event) {
-        // Kullanıcı profil bilgileri gösterilecek pencere
-        ActionLogger.log("Kullanıcı", " 👨‍💼 Kullanıcısı profilini görüntüledi ", ActionLogger.LogType.SUCCESS);
+        try {
+            // ✅ profile.fxml dosyası doğru şekilde set ediliyor
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/view/profile.fxml"
+            ));
+
+            Parent root = loader.load();
+
+            // ✅ Yeni sahne olarak gösteriliyor
+            Stage stage = new Stage();
+            stage.setTitle("Kullanıcı Profili");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // Ana pencereyi kilitler
+            stage.showAndWait();
+
+            // ✅ Başarıyla açıldıysa log yaz Kullanıcı profil bilgileri gösterilecek pencere
+            ActionLogger.log("Kullanıcı", " 👨‍💼 Kullanıcısı profilini görüntüledi ", ActionLogger.LogType.SUCCESS);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // ❌ Yükleme başarısızsa log yazma
+        }
+
     }
+
+
 
     @FXML
     private void backupData(ActionEvent event) {

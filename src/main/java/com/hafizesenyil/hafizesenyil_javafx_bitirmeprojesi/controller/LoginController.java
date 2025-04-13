@@ -6,6 +6,7 @@ import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.ERole;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.FXMLPath;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.SceneHelper;
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.SpecialColor;
+import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.session.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.Optional;
+
+/**
+ * LoginController.java
+ * Kullanıcının kullanıcı adı veya e-posta ve şifre ile giriş yapmasını sağlar.
+ * Giriş başarılı olursa kullanıcı SessionManager üzerinden sisteme alınır ve rolüne göre ilgili panele yönlendirilir.
+ * Giriş başarısız olursa hata mesajı gösterilir.
+ * Ayrıca Enter tuşu ile login işlemini başlatır ve kayıt ekranına geçiş yapılmasını sağlar.
+ */
 
 public class LoginController {
     private UserDAO userDAO;
@@ -47,23 +56,31 @@ public class LoginController {
     @FXML
     public void login() {
 
-        //
+        // Giriş alanlarındaki verileri al
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
+        // Veritabanında kullanıcıyı e-posta veya kullanıcı adına göre arar ve şifreyi doğrular
         Optional<UserDTO> optionalLoginUserDTO = userDAO.loginUser(username, password);
 
+        // Eğer kullanıcı bulunduysa giriş başarılıdır
         if (optionalLoginUserDTO.isPresent()) {
             UserDTO userDTO = optionalLoginUserDTO.get();
+
+            // 🔐 Giriş yapan kullanıcı SessionManager ile oturuma alınır
+            SessionManager.setCurrentUser(userDTO);
+
+            // Kullanıcıya başarılı giriş mesajı gösterilir
             showAlert("Başarılı", "Giriş Başarılı: " + userDTO.getUsername(), Alert.AlertType.INFORMATION);
 
+            // Kullanıcının rolüne göre farklı ekranlara yönlendirilir
             if (userDTO.getRole() == ERole.ADMIN) {
                 openAdminPane();
             } else {
                 openUserHomePane();
             }
 
-
+            // Giriş başarısızsa uyarı verilir
         } else {
             showAlert("Başarısız", "Giriş bilgileri hatalı", Alert.AlertType.ERROR);
         }

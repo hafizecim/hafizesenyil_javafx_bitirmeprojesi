@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Kullanıcı Profili Penceresi (FXML)
+    Bu pencere, giriş yapan kullanıcının ad soyad, e-posta ve rol bilgilerini görüntülemek için tasarlanmıştır.
+    Bilgiler otomatik olarak oturumdan (SessionManager) çekilir.
+-->
+
+<!-- Gerekli JavaFX bileşenleri import edilir -->
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.controller.ProfileController"
+            prefWidth="400" prefHeight="250"
+            style="-fx-background-color: white; -fx-background-radius: 10;">
+
+    <!-- Başlık -->
+    <Label text="👤 Kullanıcı Profili" layoutX="125" layoutY="20"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Bilgileri içeren dikey düzen -->
+    <VBox layoutX="50" layoutY="60" spacing="12">
+
+        <!-- Kullanıcı Adı -->
+        <HBox spacing="10">
+            <Label text="Ad Soyad:" style="-fx-font-weight: bold;" />
+            <Label fx:id="lblUsername" text="..." />
+        </HBox>
+
+        <!-- E-Posta -->
+        <HBox spacing="10">
+            <Label text="E-posta:" style="-fx-font-weight: bold;" />
+            <Label fx:id="lblEmail" text="..." />
+        </HBox>
+
+        <!-- Rol -->
+        <HBox spacing="10">
+            <Label text="Rol:" style="-fx-font-weight: bold;" />
+            <Label fx:id="lblRole" text="..." />
+        </HBox>
+
+    </VBox>
+
+    <!-- Kapat butonu -->
+    <Button text="❌ Kapat" layoutX="150" layoutY="200" onAction="#closeWindow"
+            styleClass="utility-btn logout" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;"/>
+</AnchorPane>
+
