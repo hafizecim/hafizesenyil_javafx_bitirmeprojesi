@@ -22,6 +22,9 @@ public class NotificationController {
     @FXML
     private TextField searchField; // Kullanıcı adına göre arama yapılacak alan
 
+    @FXML
+    private Label logSummaryLabel;
+
     private static final String LOG_FILE = "logs/actions.log"; // Log dosyasının konumu
 
     // Log türüne göre uygun renk döndüren yardımcı metot
@@ -140,6 +143,26 @@ public class NotificationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // 📊 Log Sayısı Göstergesi (Toplam, Hata, Uyarı Sayısı)
+        // Sayıları hesapla
+        int total = logListView.getItems().size();
+        int errorCount = 0;
+        int warningCount = 0;
+
+        for (TextFlow flow : logListView.getItems()) {
+            for (javafx.scene.Node node : flow.getChildren()) {
+                if (node instanceof Text) {
+                    String txt = ((Text) node).getText().toUpperCase();
+                    if (txt.contains("ERROR")) errorCount++;
+                    else if (txt.contains("WARNING")) warningCount++;
+                }
+            }
+        }
+
+        // Ekrana yaz (📊 Log Sayısı Göstergesi (Toplam, Hata, Uyarı Sayısı))
+        logSummaryLabel.setText("Toplam: " + total + " | Hatalar: " + errorCount + " | Uyarılar: " + warningCount);
+
     }
 
     // Kullanıcı adına göre filtreleme yapılır

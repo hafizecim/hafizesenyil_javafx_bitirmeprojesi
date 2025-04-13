@@ -1,0 +1,57 @@
+/* Genel label stilleri */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+/* Başlık etiketi */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+/* Ad Soyad, Email, Rol gibi bilgi başlıkları */
+.info-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+/* Bilgi değeri */
+.value-label {
+    -fx-text-fill: #555;
+}
+
+/* Profil resmi */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.1, 0, 2);
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+}
+
+/* Kapat butonu */
+.button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #c82333;
+    -fx-cursor: hand;
+}
+
+.gradient-background {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #fdfbfb, #ebedee);
+}
+
+#profileImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.2, 0, 2);
+    -fx-background-color: white;
+    -fx-padding: 4px;
+    -fx-border-radius: 100px;
+    -fx-background-radius: 100px;
+}

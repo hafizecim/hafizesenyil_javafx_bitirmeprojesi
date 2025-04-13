@@ -9,6 +9,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 public class NotificationHistoryController {
@@ -53,5 +56,26 @@ public class NotificationHistoryController {
     private void closeWindow() {
         Stage stage = (Stage) notificationArea.getScene().getWindow();
         stage.close();
+    }
+
+    // ******* 🔔 Bildirimler butonu için ************
+    @FXML
+    private TextArea notificationTextArea;  // Bu, veriyi gösterecek olan TextArea
+
+    // Bildirimleri dosyadan okuma ve ekrana aktarma
+    @FXML
+    private void showNotifications() {
+        String fileName = "notifications.txt";
+        StringBuilder notifications = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                notifications.append(line).append("\n");  // Her satırı yeni bir satır olarak ekle
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        notificationTextArea.setText(notifications.toString());  // TextArea'ya veriyi aktar
     }
 }

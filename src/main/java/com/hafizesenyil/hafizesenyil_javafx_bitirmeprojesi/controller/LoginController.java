@@ -226,4 +226,3 @@ public class LoginController {
         // Diğer işlevsellikler burada yer alabilir
     }
 }
-

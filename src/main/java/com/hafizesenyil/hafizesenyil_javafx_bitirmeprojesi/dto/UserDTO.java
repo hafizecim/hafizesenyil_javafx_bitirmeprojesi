@@ -2,6 +2,7 @@ package com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.dto;
 
 import com.hafizesenyil.hafizesenyil_javafx_bitirmeprojesi.utils.ERole;
 import lombok.*;
+import java.time.LocalDateTime;
 
 import java.util.Optional;
 
@@ -22,16 +23,22 @@ public class UserDTO {
     private String email;
     private ERole role;
 
+    // ✅ Yeni alanlar:
+    private LocalDateTime joinDate;    // Üyelik tarihi
+    private LocalDateTime lastLogin;   // Son giriş tarihi
 
     // Parametresiz Constructor
     // Parametreli Constructor
 
-    public UserDTO(Integer id, String username, String password, String email, ERole role) {
+    public UserDTO(Integer id, String username, String password, String email, ERole role,
+                   LocalDateTime joinDate, LocalDateTime lastLogin) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.joinDate = joinDate;
+        this.lastLogin = lastLogin;
     }
 
 

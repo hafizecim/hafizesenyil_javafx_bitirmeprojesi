@@ -39,18 +39,18 @@
             <!-- Filtreleme seçenekleri -->
             <MenuButton fx:id="filterMenu" text="🔍 Filtrele" style="-fx-background-color: #08c9c9; -fx-text-fill: white; -fx-background-radius: 8;">
                 <items>
-                    <MenuItem text="🪄 Sadece Hatalar"  onAction="#onlyErrorsCheck" style=" -fx-background-radius: 8;"/>
-                    <MenuItem text="⏰ Tarihe Göre Sırala"  onAction="#sortByDateCheck" style=" -fx-background-radius: 8;"/>
+                    <MenuItem text="🪄 Sadece Hatalar"  onAction="#onlyErrorsCheck" />
+                    <MenuItem text="⏰ Tarihe Göre Sırala"  onAction="#sortByDateCheck" />
                 </items>
             </MenuButton>
-
-
 
         </HBox>
 
         <!-- Bildirimlerin listelendiği alan -->
-        <ListView fx:id="logListView"
-                  style="-fx-background-color: white; -fx-control-inner-background: white;"/>
+        <ListView fx:id="logListView" style="-fx-background-color: white; -fx-control-inner-background: white;"/>
+
+        <!--📊 Log Sayısı Göstergesi (Toplam, Hata, Uyarı Sayısı)-->
+        <Label fx:id="logSummaryLabel" text="Toplam: 0 | Hatalar: 0 | Uyarılar: 0" style="-fx-font-weight: bold; -fx-padding: 8;" />
 
     </VBox>
 </AnchorPane>
