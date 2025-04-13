@@ -31,7 +31,7 @@
         <!-- 🔍 Arama ve filtreleme alanı -->
         <HBox spacing="10">
             <TextField fx:id="searchField" promptText="Başlıkta ara..." /> <!-- Başlıkta arama -->
-            <ComboBox fx:id="categoryFilter" promptText="Kategori Seç"  style="-fx-background-color: #3d8e00; -fx-text-fill: white; -fx-background-radius: 8;"/>  <!-- Kategori filtresi -->
+            <ComboBox fx:id="categoryFilter" promptText="Kategori Seç"  style="-fx-background-color: #0984e3; -fx-text-fill: white; -fx-background-radius: 8;"/>  <!-- Kategori filtresi -->
             <Button text="🔍 Filtrele" onAction="#filterNotes" style="-fx-background-color: #08c9c9; -fx-text-fill: white; -fx-background-radius: 8;"/>
             <Button text="➕ Yeni Not" onAction="#addNote" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 8;"/>
             <CheckBox fx:id="pinnedFilter" text="📌 Sabitler" /> <!-- Sabitlenmişleri göster -->
@@ -42,9 +42,14 @@
 
         <!-- İşlem butonları -->
         <HBox spacing="10">
-            <Button text="📝 Düzenle" onAction="#editNote" style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;"/>
-            <Button text="🗑️ Sil" onAction="#deleteNote" style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            <Button text="📝 Düzenle" onAction="#editNote"
+                    style="-fx-background-color: #00b894; -fx-text-fill: white; -fx-background-radius: 8;" />
+            <Button text="🗑️ Sil" onAction="#deleteNote"
+                    style="-fx-background-color: #d63031; -fx-text-fill: white; -fx-background-radius: 8;" />
+            <Button text="🔁 Yeniden Yükle" onAction="#resetFilters"
+                    style="-fx-background-color: #6c5ce7; -fx-text-fill: white; -fx-background-radius: 8;" />
         </HBox>
+
 
     </VBox>
 </AnchorPane>

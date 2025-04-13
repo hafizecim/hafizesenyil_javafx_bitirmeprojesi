@@ -30,10 +30,6 @@
             <Label text="📝 Başlık:"/>
             <TextField fx:id="titleField" promptText="Not başlığı yazın"/>
 
-            <!-- Tarih (salt okunur)(otomatik gösterim, seçilemez) -->
-            <Label text="📅 Tarih:"/>
-            <Label fx:id="dateLabel" style="-fx-text-fill: #555;" />
-
             <!-- Açıklama -->
             <Label text="📋 Açıklama:"/>
             <TextArea fx:id="contentArea" promptText="Not içeriğini girin..." prefRowCount="5"/>
@@ -44,6 +40,10 @@
 
             <!-- Sabitlenmiş mi? -->
             <CheckBox fx:id="pinnedCheck" text="📌 Sabitlenmiş Not" />
+
+            <!-- Tarih (salt okunur)(otomatik gösterim, seçilemez) -->
+            <Label text="📅 Tarih:"/>
+            <Label fx:id="dateLabel" style="-fx-text-fill: #555;" />
 
             <!-- Kaydet ve iptal butonları  -->
             <HBox spacing="10">

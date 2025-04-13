@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import javafx.scene.layout.Region;
 
 
 // NotebookController, not defteri arayüzünü kontrol eden sınıftır.
@@ -28,6 +29,7 @@ public class NotebookController {
     @FXML private CheckBox pinnedFilter;                // Sadece sabitlenmiş notları gösterme seçeneği
     @FXML private ListView<NotebookDTO> noteListView;   // Notların listelendiği liste görünümü
 
+
     // =============== Veriler ===============
     private final ObservableList<NotebookDTO> notebookList = FXCollections.observableArrayList(); // Uygulamadaki tüm notları tutar
     private final UserDTO currentUser = new UserDTO(); // Demo kullanıcı (giriş sistemi entegre edilince değiştirilebilir)
@@ -36,6 +38,8 @@ public class NotebookController {
     @FXML
     public void initialize() {
         // Filtre kategorilerini tanımla
+        // ✅ Kategori seçimi için null + kategori seçenekleri
+        categoryFilter.getItems().add(null); // Bu, promptText'i aktif eder
         categoryFilter.getItems().addAll("İş", "Kişisel", "Okul");
 
         // Örnek veriler ekle
@@ -58,6 +62,15 @@ public class NotebookController {
                 } else {
                     String pinIcon = note.isPinned() ? "📌 " : "";
                     setText(pinIcon + note.getTitle() + " [" + note.getCategory() + "] - " + note.getCreatedDate().toLocalDate());
+                }
+            }
+        });
+        // 5️⃣ Çift tıklama ile detay göster
+        noteListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // çift tıklama
+                NotebookDTO selectedNote = noteListView.getSelectionModel().getSelectedItem();
+                if (selectedNote != null) {
+                    showNoteDetails(selectedNote); // detay gösterme metodunu çağır
                 }
             }
         });
@@ -101,29 +114,66 @@ public class NotebookController {
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
                     notebookList.remove(selected); // Not silinir
+                    filterNotes(); // ✅ Silindikten sonra filtrelemeyi yeniden uygula
                 }
             });
         }
     }
 
+
+    // =============== 🔁 Tüm filtreleri sıfırla ve listeyi yeniden yükle ===============//
+    @FXML
+    private void resetFilters() {
+        searchField.clear();        // Arama kutusunu temizle
+        categoryFilter.getSelectionModel().clearSelection(); // Kategori seçimini temizle
+
+        categoryFilter.setValue(null); // 🔑 Seçili öğeyi null yap (boş seçimi göster)
+        categoryFilter.setPromptText("Kategori Seç"); // ✅ PromptText yeniden set ediliyor
+
+        pinnedFilter.setSelected(false); // Sabit filtreyi kaldır
+        noteListView.setItems(notebookList); // Tüm notları yeniden yükle
+        noteListView.refresh(); // Yenile
+
+    }
+
     // =============== 📝 Not Düzenleme (Seçili) ===============//
     @FXML
-    private void editNote() {
+    private void editNote() { // 📝 Seçili notu detaylı olarak düzenler
         NotebookDTO selected = noteListView.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
-        // İçeriği güncellemek için kullanıcıya dialog göster
-        TextInputDialog dialog = new TextInputDialog(selected.getContent());
-        dialog.setTitle("Not Düzenle");
-        dialog.setHeaderText("Başlık: " + selected.getTitle());
-        dialog.setContentText("Yeni içerik:");
+        try {
+            // 1️⃣ Not düzenleme formunu aç
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hafizesenyil/hafizesenyil_javafx_bitirmeprojesi/view/note-ekle-form.fxml"));
+            DialogPane pane = loader.load();
 
-        dialog.showAndWait().ifPresent(newContent -> {
-            // Yeni içerikle güncelle
-            selected.setContent(newContent);                     // İçeriği güncelle
-            selected.setUpdatedDate(LocalDateTime.now());        // Tarihi güncelle
-            noteListView.refresh();                              // Ekranı yenile
-        });
+            // 2️⃣ Form controller'ına mevcut notu gönder (düzenleme modu)
+            NoteEkleFormController formController = loader.getController();
+            formController.setNote(selected); // not = dolu DTO (düzenleme)
+
+            // 3️⃣ Dialog pencereyi oluştur
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle("Notu Düzenle");
+            dialog.showAndWait();
+
+            // 4️⃣ Kaydedildiyse verileri güncelle
+            if (formController.isSaved()) {
+                NotebookDTO updatedNote = formController.getNote();
+
+                // Aynı nesne üzerinden güncelleme (ObservableList zaten bu nesneyi tutuyor)
+                selected.setTitle(updatedNote.getTitle());
+                selected.setContent(updatedNote.getContent());
+                selected.setCategory(updatedNote.getCategory());
+                selected.setPinned(updatedNote.isPinned());
+                selected.setUpdatedDate(LocalDateTime.now());
+
+                noteListView.refresh(); // Görünümü yenile
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Hata logu
+        }
     }
 
     // =============== 🔍 Not Filtreleme ===============
@@ -143,5 +193,28 @@ public class NotebookController {
 
         // Yeni filtrelenmiş listeyi göster
         noteListView.setItems(FXCollections.observableArrayList(filtered));
+
+
+    }// ✅ bu metot burada bitiyor
+
+    // 📋 Seçilen notun detaylarını gösterir
+    private void showNoteDetails(NotebookDTO note) {
+        StringBuilder content = new StringBuilder();
+        content.append("📌 Başlık: ").append(note.getTitle()).append("\n\n");
+        content.append("📋 Açıklama:\n").append(note.getContent()).append("\n\n");
+        content.append("🗂️ Kategori: ").append(note.getCategory()).append("\n");
+        content.append("📎 Sabitlenmiş mi: ").append(note.isPinned() ? "Evet" : "Hayır").append("\n");
+        content.append("🕒 Oluşturulma: ").append(note.getCreatedDate()).append("\n");
+        if (note.getUpdatedDate() != null) {
+            content.append("📝 Güncellenme: ").append(note.getUpdatedDate()).append("\n");
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Not Detayları");
+        alert.setHeaderText("Seçilen Not");
+        alert.setContentText(content.toString());
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE); // Çok satırlı metin için
+
+        alert.showAndWait();
     }
 }
